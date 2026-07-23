@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conceptos de VLAN en redes Cisco - Análisis técnico con diseño moderno">
+    <title>Conceptos de VLAN en Redes Cisco | Análisis Técnico</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="header-content">
+            <span class="header-badge">CCNA 3-4 · Material Académico</span>
+            <h1>Conceptos de <span>VLAN</span> en Redes Cisco</h1>
+            <p class="header-subtitle">
+                Un análisis estructurado sobre las Redes de Área Local Virtuales (VLAN), su funcionamiento, 
+                tipos de asociación y ventajas en la arquitectura de redes conmutadas modernas.
+            </p>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="nav-sticky">
+        <div class="nav-container">
+            <ul class="nav-list">
+                <li><a href="#introduccion" class="nav-link">8.1.1 Introducción</a></li>
+                <li><a href="#dominios" class="nav-link">8.1.2 Dominios</a></li>
+                <li><a href="#operacion" class="nav-link">8.1.3 Operación</a></li>
+                <li><a href="#ventajas" class="nav-link">8.1.4 Ventajas</a></li>
+                <li><a href="#tipos" class="nav-link">8.1.5 Tipos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-container">
+
+        <!-- MÓDULO 8 -->
+        <section class="module-header" id="modulo8">
+            <div class="module-tag">Módulo 8</div>
+            <h2>LAN Virtuales (VLAN)</h2>
+            <p class="module-objectives">
+                Objetivo 8.1 — Conceptos de VLAN: definición, dominios de broadcast, operación, ventajas y tipos de asociación
+            </p>
+        </section>
+
+        <!-- 8.1.1 INTRODUCCIÓN -->
+        <section class="section" id="introduccion">
+            <div class="section-header">
+                <span class="section-number">8.1.1</span>
+                <h3>Introducción a las VLAN</h3>
+            </div>
+
+            <p>
+                En el contexto de las redes conmutadas modernas, las <strong>Redes de Área Local Virtuales</strong> (VLAN, 
+                por sus siglas en inglés) representan una evolución fundamental en la forma de organizar y gestionar 
+                el tráfico de red. Una VLAN se define como una agrupación lógica de estaciones de trabajo, servidores 
+                y dispositivos de red que, aunque pueden estar distribuidos físicamente en diferentes segmentos de LAN, 
+                se comportan como si pertenecieran al mismo dominio de broadcast.
+            </p>
+
+            <div class="analogy-box">
+                <h5>Analogía con departamentos corporativos</h5>
+                <p>
+                    Una VLAN puede compararse con los departamentos de una empresa: aunque los empleados del departamento 
+                    de Finanzas puedan estar ubicados en diferentes pisos o edificios, todos pertenecen al mismo grupo 
+                    funcional y comparten recursos específicos. Las VLAN replican este concepto en la red, agrupando 
+                    dispositivos según criterios lógicos (departamento, función, proyecto) en lugar de su ubicación física.
+                </p>
+            </div>
+
+            <h4>Características fundamentales de las VLAN</h4>
+            <p>
+                Las VLAN segmentan lógicamente las redes conmutadas según funciones organizacionales, departamentos 
+                o equipos de proyecto, independientemente de la ubicación física de los usuarios o sus conexiones 
+                físicas a la infraestructura de red. Esta segmentación lógica se gestiona mediante software, lo que 
+                elimina la necesidad de reconfiguraciones físicas cuando se realizan cambios en la organización.
+            </p>
+
+            <p>
+                Las estaciones de trabajo y servidores que pertenecen a una VLAN específica pueden comunicarse entre 
+                sí como si estuvieran conectados al mismo segmento físico de LAN, incluso cuando están conectados 
+                a diferentes switches distribuidos en distintas ubicaciones geográficas.
+            </p>
+
+            <div class="info-box">
+                <strong>💡 Concepto clave:</strong>
+                <p>Las VLAN se componen de hosts o equipos de red conectados mediante un único dominio de puenteo. 
+                Los switches de LAN operan protocolos de puenteo con un grupo de puente separado para cada VLAN, 
+                garantizando el aislamiento del tráfico entre diferentes grupos lógicos.</p>
+            </div>
+
+            <h4>La necesidad de segmentación lógica</h4>
+            <p>
+                En las configuraciones tradicionales de LAN, la segmentación se lograba mediante routers físicos, 
+                lo que implicaba costos adicionales de hardware y complejidad en la gestión. Las VLAN proporcionan 
+                los mismos servicios de segmentación que los routers, pero con la flexibilidad de implementarse 
+                mediante software en switches de capa 2, ofreciendo una solución más escalable y económica.
+            </p>
+        </section>
+
+        <!-- 8.1.2 DOMINIOS DE BROADCAST -->
+        <section class="section" id="dominios">
+            <div class="section-header">
+                <span class="section-number">8.1.2</span>
+                <h3>Dominios de Broadcast con VLAN y Routers</h3>
+            </div>
+
+            <p>
+                Uno de los conceptos más críticos en el diseño de redes es el <strong>dominio de broadcast</strong>. 
+                Una VLAN constituye esencialmente un dominio de broadcast que se crea en uno o más switches. 
+                Comprender cómo los routers interactúan con estos dominios es fundamental para el diseño de 
+                arquitecturas de red eficientes.
+            </p>
+
+            <div class="analogy-box">
+                <h5>Analogía con salas de conferencias</h5>
+                <p>
+                    Un dominio de broadcast puede compararse con una sala de conferencias: cuando alguien hace un 
+                    anuncio (broadcast), todos los presentes en esa sala lo escuchan. Sin embargo, las personas en 
+                    otras salas no reciben el mensaje. Los routers actúan como las paredes entre salas, permitiendo 
+                    la comunicación controlada entre diferentes grupos sin que los anuncios se propaguen indiscriminadamente.
+                </p>
+            </div>
+
+            <h4>El rol del router en topologías VLAN</h4>
+            <p>
+                Los routers cumplen una función esencial en las topologías VLAN: proporcionan conectividad entre 
+                diferentes dominios de broadcast (VLAN). Dado que los switches no puentean tráfico entre VLAN 
+                (esto violaría la integridad del dominio de broadcast), el enrutamiento de capa 3 se convierte 
+                en el mecanismo necesario para la comunicación inter-VLAN.
+            </p>
+
+            <p>
+                Los routers en topologías VLAN proporcionan tres funciones críticas:
+            </p>
+            <ul>
+                <li><strong>Filtrado de broadcast:</strong> previenen la propagación de tráfico de broadcast entre VLAN, 
+                reduciendo la congestión innecesaria en la red.</li>
+                <li><strong>Seguridad:</strong> permiten implementar políticas de acceso y filtrado entre diferentes 
+                grupos lógicos de usuarios.</li>
+                <li><strong>Gestión del flujo de tráfico:</strong> facilitan el control y la optimización del tráfico 
+                entre diferentes segmentos de red.</li>
+            </ul>
+
+            <h4>Mecanismo de enrutamiento entre VLAN</h4>
+            <p>
+                Cuando un dispositivo en una VLAN necesita comunicarse con un dispositivo en otra VLAN, el proceso 
+                sigue un patrón específico:
+            </p>
+
+            <ol>
+                <li>El dispositivo origen envía la trama hacia la dirección MAC de la interfaz del router conectada 
+                a su VLAN.</li>
+                <li>El router recibe la trama y realiza el enrutamiento de capa 3 basándose en las direcciones IP.</li>
+                <li>El router reenvía la trama hacia la VLAN de destino a través de la interfaz correspondiente.</li>
+            </ol>
+
+            <div class="network-diagram">
+<pre>
+  VLAN Ingeniería (192.168.10.0/24)
+  ┌─────────────────────────────────┐
+  │  Estación 1                     │
+  │  IP: 192.168.10.5              │
+  │  MAC: AA:BB:CC:DD:EE:01        │
+  └─────────────┬───────────────────┘
+                │
+                │ Trama con destino MAC del router
+                ▼
+  ┌─────────────────────────────────┐
+  │         ROUTER                  │
+  │  Fa0/0: 192.168.10.1           │
+  │  Fa0/1: 192.168.20.1           │
+  │                                 │
+  │  Enrutamiento de Capa 3        │
+  └─────────────┬───────────────────┘
+                │
+                │ Trama con destino MAC de Estación 2
+                ▼
+  ┌─────────────────────────────────┐
+  │  Estación 2                     │
+  │  IP: 192.168.20.10             │
+  │  MAC: AA:BB:CC:DD:EE:02        │
+  └─────────────────────────────────┘
+  VLAN Ventas (192.168.20.0/24)
+</pre>
+            </div>
+
+            <h4>Comportamiento del switch con VLAN</h4>
+            <p>
+                La implementación de VLAN en un switch modifica su comportamiento operativo de manera significativa:
+            </p>
+            <ul>
+                <li>El switch mantiene una <strong>tabla de puenteo separada</strong> para cada VLAN, asegurando 
+                el aislamiento del tráfico.</li>
+                <li>Cuando una trama ingresa por un puerto asignado a una VLAN específica, el switch consulta 
+                únicamente la tabla de puenteo correspondiente a esa VLAN.</li>
+                <li>El proceso de aprendizaje de direcciones MAC se realiza de forma independiente para cada VLAN.</li>
+                <li>Las decisiones de reenvío se toman considerando exclusivamente la información de la VLAN de origen.</li>
+            </ul>
+
+            <div class="info-box warning">
+                <strong>⚠️ Importante:</strong>
+                <p>Los switches no puentean tráfico entre VLAN bajo ninguna circunstancia. Esta restricción es 
+                fundamental para mantener la integridad de los dominios de broadcast y garantizar la segmentación 
+                lógica de la red.</p>
+            </div>
+        </section>
+
+        <!-- 8.1.3 OPERACIÓN -->
+        <section class="section" id="operacion">
+            <div class="section-header">
+                <span class="section-number">8.1.3</span>
+                <h3>Operación de las VLAN</h3>
+            </div>
+
+            <p>
+                La operación de las VLAN se basa en la asignación de puertos de switch a grupos lógicos específicos. 
+                Cada puerto de un switch puede asignarse a una VLAN particular, y los puertos que pertenecen a la 
+                misma VLAN comparten el mismo dominio de broadcast. Los puertos que no pertenecen a esa VLAN no 
+                reciben los broadcasts generados dentro de ella, lo que mejora significativamente el desempeño de 
+                la red al reducir el tráfico innecesario.
+            </p>
+
+            <h4>VLAN por defecto y VLAN de administración</h4>
+            <p>
+                Todos los switches Cisco poseen una <strong>VLAN por defecto</strong> denominada <strong>VLAN 1</strong>, 
+                que también funciona como VLAN de administración. Esta VLAN no puede eliminarse y, como mínimo, un 
+                puerto debe permanecer asignado a ella para permitir la gestión del switch. Todos los demás puertos 
+                del switch pueden reasignarse a VLAN alternativas según los requerimientos de la red.
+            </p>
+
+            <div class="info-box">
+                <strong>💡 Nota técnica:</strong>
+                <p>La VLAN 1 transporta tráfico de control del switch (como CDP - Cisco Discovery Protocol) y, 
+                en muchas implementaciones, se recomienda migrar el tráfico de usuarios a VLAN diferentes para 
+                mejorar la seguridad y el aislamiento.</p>
+            </div>
+
+            <h4>Métodos de asociación de VLAN</h4>
+            <p>
+                Existen dos métodos principales para asociar dispositivos a VLAN:
+            </p>
+
+            <div class="compare-grid">
+                <div class="compare-card">
+                    <div class="compare-icon">🔒</div>
+                    <h5>Asociación Estática</h5>
+                    <p>
+                        También conocida como <strong>VLAN basada en puerto</strong> o "VLAN de puerto central". 
+                        El administrador configura manualmente cada puerto del switch para asignarlo a una VLAN 
+                        específica. Cuando un dispositivo se conecta a ese puerto, automáticamente hereda la VLAN 
+                        asociada, independientemente de las características del dispositivo.
+                    </p>
+                </div>
+                
+                <div class="compare-card">
+                    <div class="compare-icon">🔓</div>
+                    <h5>Asociación Dinámica</h5>
+                    <p>
+                        Las <strong>VLAN dinámicas</strong> se crean mediante software de administración de red 
+                        (como CiscoWorks). La asociación se basa en la dirección MAC del dispositivo conectado. 
+                        Cuando un dispositivo se conecta, el switch consulta una base de datos en el Servidor de 
+                        Configuración de VLAN para determinar la VLAN correspondiente.
+                    </p>
+                </div>
+            </div>
+
+            <h4>Ventajas de la asociación basada en puerto</h4>
+            <p>
+                La asociación estática basada en puerto es el método más comúnmente implementado debido a sus 
+                ventajas operativas:
+            </p>
+            <ul>
+                <li><strong>Simplicidad de gestión:</strong> no requiere tablas de búsqueda complejas ni bases 
+                de datos externas para la segmentación.</li>
+                <li><strong>Transparencia para el usuario:</strong> los usuarios conectados a un puerto no necesitan 
+                conocer la existencia de las VLAN; la configuración es completamente transparente.</li>
+                <li><strong>Flexibilidad:</strong> múltiples usuarios pueden conectarse al mismo puerto (a través 
+                de un hub, por ejemplo) y todos pertenecerán a la misma VLAN.</li>
+                <li><strong>Seguridad:</strong> si un dispositivo se desconecta y otro se conecta al mismo puerto, 
+                heredará automáticamente la VLAN configurada, manteniendo el control de acceso.</li>
+            </ul>
+
+            <div class="analogy-box">
+                <h5>Analogía con habitaciones de hotel</h5>
+                <p>
+                    La asociación basada en puerto funciona como las habitaciones de un hotel: cada habitación 
+                    (puerto) tiene un nivel de acceso predeterminado (VLAN). No importa quién se hospede en la 
+                    habitación; el nivel de acceso está determinado por la habitación misma, no por el huésped.
+                </p>
+            </div>
+        </section>
+
+        <!-- 8.1.4 VENTAJAS -->
+        <section class="section" id="ventajas">
+            <div class="section-header">
+                <span class="section-number">8.1.4</span>
+                <h3>Ventajas de las VLAN</h3>
+            </div>
+
+            <p>
+                La implementación de VLAN en una infraestructura de red conmutada proporciona beneficios significativos 
+                que impactan positivamente en el desempeño, la seguridad y la gestión administrativa de la red.
+            </p>
+
+            <h4>Ventajas administrativas y operativas</h4>
+            <p>
+                Las VLAN permiten a los administradores de red organizar las LAN de forma lógica en lugar de física, 
+                lo que constituye una ventaja fundamental. Esta capacidad facilita diversas tareas administrativas:
+            </p>
+
+            <ul>
+                <li><strong>Movilidad de estaciones de trabajo:</strong> cuando un usuario se traslada físicamente 
+                a otra ubicación, no es necesario reconfigurar su dirección IP o cambiar su conexión física. 
+                Basta con reasignar el puerto del switch a la VLAN correspondiente.</li>
+                
+                <li><strong>Adición de estaciones de trabajo:</strong> incorporar nuevos dispositivos a la red 
+                se simplifica significativamente, ya que solo requiere configurar el puerto del switch al que 
+                se conectará el nuevo dispositivo.</li>
+                
+                <li><strong>Modificaciones de configuración:</strong> los cambios en la estructura lógica de la 
+                red pueden realizarse mediante software, sin necesidad de intervenciones físicas en el cableado 
+                o la infraestructura.</li>
+                
+                <li><strong>Control del tráfico de red:</strong> al segmentar la red en dominios de broadcast 
+                más pequeños, se reduce el tráfico innecesario y se optimiza el uso del ancho de banda disponible.</li>
+                
+                <li><strong>Mejora de la seguridad:</strong> la segmentación lógica permite implementar políticas 
+                de acceso más granulares, aislando grupos de usuarios y restringiendo la comunicación entre 
+                diferentes segmentos de red.</li>
+            </ul>
+
+            <div class="info-box success">
+                <strong>✅ Impacto en el desempeño:</strong>
+                <p>Las VLAN ofrecen mayor ancho de banda efectivo a los usuarios en comparación con una red 
+                Ethernet compartida basada en hubs. Al reducir los dominios de broadcast, se minimiza el tráfico 
+                de broadcast innecesario, lo que se traduce en mejor rendimiento general de la red.</p>
+            </div>
+
+            <h4>Beneficios de seguridad</h4>
+            <p>
+                La segmentación mediante VLAN proporciona una capa adicional de seguridad al aislar el tráfico 
+                entre diferentes grupos lógicos de usuarios. Esto es particularmente relevante en escenarios donde:
+            </p>
+            <ul>
+                <li>Diferentes departamentos requieren acceso a recursos específicos y no deben poder interceptar 
+                tráfico de otros departamentos.</li>
+                <li>Se necesita separar dispositivos de invitados o IoT del tráfico corporativo crítico.</li>
+                <li>Existen requerimientos de cumplimiento normativo que exigen segregación de datos.</li>
+            </ul>
+
+            <h4>Escalabilidad y flexibilidad</h4>
+            <p>
+                Las VLAN mejoran la escalabilidad de la red al permitir que la infraestructura crezca de manera 
+                organizada. Nuevos grupos de usuarios pueden incorporarse creando VLAN adicionales sin necesidad 
+                de rediseñar la topología física de la red. Esta flexibilidad es especialmente valiosa en 
+                organizaciones dinámicas donde los equipos de proyecto y las estructuras organizacionales 
+                evolucionan constantemente.
+            </p>
+        </section>
+
+        <!-- 8.1.5 TIPOS -->
+        <section class="section" id="tipos">
+            <div class="section-header">
+                <span class="section-number">8.1.5</span>
+                <h3>Tipos de VLAN</h3>
+            </div>
+
+            <p>
+                Las VLAN pueden clasificarse según el criterio utilizado para determinar la asociación de dispositivos 
+                a grupos lógicos. Existen tres métodos básicos de asociación que permiten controlar cómo se asigna 
+                un paquete o dispositivo a una VLAN específica.
+            </p>
+
+            <div class="compare-grid">
+                <div class="compare-card">
+                    <div class="compare-icon">🔌</div>
+                    <h5>VLAN Basadas en Puerto</h5>
+                    <p>
+                        Es el método más común y sencillo. La VLAN se determina por el puerto físico del switch 
+                        al que se conecta el dispositivo. Cada puerto se configura estáticamente para pertenecer 
+                        a una VLAN específica. Todos los dispositivos conectados a ese puerto heredan automáticamente 
+                        la VLAN asignada, independientemente de sus características o dirección MAC.
+                    </p>
+                </div>
+                
+                <div class="compare-card">
+                    <div class="compare-icon">🆔</div>
+                    <h5>VLAN Basadas en Dirección MAC</h5>
+                    <p>
+                        La asociación se realiza dinámicamente según la dirección MAC del dispositivo conectado. 
+                        El switch consulta una base de datos que mapea direcciones MAC a VLAN específicas. Este 
+                        método ofrece mayor flexibilidad, ya que un usuario puede conectarse a cualquier puerto 
+                        y automáticamente se le asignará la VLAN correspondiente a su dispositivo.
+                    </p>
+                </div>
+                
+                <div class="compare-card">
+                    <div class="compare-icon">📡</div>
+                    <h5>VLAN Basadas en Protocolo</h5>
+                    <p>
+                        La VLAN se determina según el protocolo de red utilizado por el tráfico (por ejemplo, 
+                        IPv4, IPv6, IPX). Este método permite segmentar la red según el tipo de protocolo, 
+                        lo que puede ser útil en entornos con múltiples pilas de protocolos o para aislar 
+                        tráfico de diferentes familias de protocolos.
+                    </p>
+                </div>
+            </div>
+
+            <h4>Consideraciones sobre la cantidad de VLAN</h4>
+            <p>
+                La cantidad de VLAN que pueden implementarse en un switch varía según diversos factores:
+            </p>
+            <ul>
+                <li><strong>Patrones de tráfico:</strong> el volumen y tipo de tráfico que circula por la red 
+                influye en el número óptimo de VLAN para evitar congestión o subutilización de recursos.</li>
+                <li><strong>Tipos de aplicaciones:</strong> aplicaciones con requerimientos específicos de 
+                ancho de banda, latencia o seguridad pueden justificar la creación de VLAN dedicadas.</li>
+                <li><strong>Estructura organizacional:</strong> el número de departamentos, equipos de proyecto 
+                o grupos de usuarios determina la segmentación lógica necesaria.</li>
+                <li><strong>Capacidad del hardware:</strong> los switches tienen límites en el número de VLAN 
+                que pueden soportar, determinado por su memoria y capacidad de procesamiento.</li>
+            </ul>
+
+            <div class="info-box warning">
+                <strong>⚠️ Consideración de diseño:</strong>
+                <p>Aunque técnicamente es posible crear un gran número de VLAN, el diseño óptimo busca un 
+                equilibrio entre segmentación granular y simplicidad de gestión. Demasiadas VLAN pueden 
+                complicar la administración y el enrutamiento inter-VLAN, mientras que muy pocas VLAN pueden 
+                no proporcionar la segmentación necesaria para seguridad y desempeño.</p>
+            </div>
+
+            <h4>Selección del método de asociación</h4>
+            <p>
+                La elección del método de asociación de VLAN depende de los requerimientos específicos de la 
+                organización:
+            </p>
+            <ul>
+                <li><strong>VLAN basadas en puerto:</strong> ideales para entornos donde los dispositivos son 
+                estáticos y la seguridad no requiere autenticación basada en identidad del dispositivo.</li>
+                <li><strong>VLAN basadas en MAC:</strong> apropiadas para entornos donde los usuarios se mueven 
+                frecuentemente entre ubicaciones y se requiere que su dispositivo mantenga la misma VLAN 
+                independientemente del puerto al que se conecten.</li>
+                <li><strong>VLAN basadas en protocolo:</strong> útiles en entornos con múltiples protocolos 
+                o cuando se necesita aislar tráfico por familia de protocolos.</li>
+            </ul>
+
+            <div class="code-block">
+                <code>
+! Ejemplo de configuración de VLAN basada en puerto en Cisco IOS<br>
+Switch(config)# vlan 10<br>
+Switch(config-vlan)# name INGENIERIA<br>
+Switch(config-vlan)# exit<br>
+Switch(config)# interface FastEthernet 0/1<br>
+Switch(config-if)# switchport mode access<br>
+Switch(config-if)# switchport access vlan 10<br>
+Switch(config-if)# exit
+                </code>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <p><strong>CCNA 3-4</strong> · Conceptos de VLAN</p>
+        <p>Módulo 8 · Objetivo 8.1</p>
+        <p style="margin-top: 1rem; font-size: 0.85rem;">Contenido académico basado en Cisco Networking Academy · 2026</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,599 @@
+/* ========================================
+   RESET Y VARIABLES GLOBALES - TEMA OSCURO
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-tertiary: #1a1a25;
+    --bg-card: #16161f;
+    --accent-cyan: #00d4ff;
+    --accent-blue: #0066ff;
+    --accent-purple: #a855f7;
+    --accent-green: #10b981;
+    --accent-orange: #f59e0b;
+    --accent-red: #ef4444;
+    --text-primary: #e4e4e7;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    --border-color: #27272a;
+    --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.3);
+    --glow-purple: 0 0 20px rgba(168, 85, 247, 0.3);
+    --shadow: 0 4px 24px rgba(0,0,0,0.5);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.7);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.8;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.03) 0%, transparent 50%);
+}
+
+/* ========================================
+   HEADER Y NAVEGACIÓN
+   ======================================== */
+.site-header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    color: var(--text-primary);
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.site-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.header-badge {
+    display: inline-block;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    color: var(--accent-cyan);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--glow-cyan);
+}
+
+.site-header h1 {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.header-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 750px;
+    line-height: 1.7;
+}
+
+/* Navegación sticky */
+.nav-sticky {
+    background: rgba(18, 18, 26, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.nav-list {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-cyan) var(--bg-secondary);
+    padding: 1.2rem 0;
+    list-style: none;
+}
+
+.nav-list::-webkit-scrollbar {
+    height: 6px;
+}
+
+.nav-list::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+.nav-list::-webkit-scrollbar-thumb {
+    background: var(--accent-cyan);
+    border-radius: 3px;
+}
+
+.nav-link {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: var(--transition);
+    border: 1px solid transparent;
+}
+
+.nav-link:hover {
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--accent-cyan);
+    border-color: rgba(0, 212, 255, 0.3);
+    box-shadow: var(--glow-cyan);
+}
+
+/* ========================================
+   CONTENIDO PRINCIPAL
+   ======================================== */
+.main-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+/* Módulos */
+.module-header {
+    background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-card));
+    border: 1px solid var(--border-color);
+    padding: 3rem;
+    border-radius: 20px;
+    margin: 3rem 0 2.5rem;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.module-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+}
+
+.module-header:first-of-type {
+    margin-top: 0;
+}
+
+.module-tag {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--accent-cyan);
+    margin-bottom: 0.8rem;
+}
+
+.module-header h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.8rem;
+    color: var(--text-primary);
+}
+
+.module-objectives {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* Secciones */
+.section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2.8rem;
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.section:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    box-shadow: var(--shadow-lg), var(--glow-cyan);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.8rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.section-number {
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+    color: var(--bg-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    white-space: nowrap;
+    box-shadow: var(--glow-cyan);
+}
+
+.section h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.section h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin: 2.5rem 0 1.2rem;
+}
+
+.section p {
+    margin-bottom: 1.3rem;
+    text-align: justify;
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.section ul, .section ol {
+    margin: 1.2rem 0 1.8rem 2rem;
+}
+
+.section li {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+.section li strong {
+    color: var(--text-primary);
+}
+
+/* ========================================
+   CAJAS DE INFORMACIÓN
+   ======================================== */
+.info-box {
+    background: rgba(0, 212, 255, 0.05);
+    border-left: 4px solid var(--accent-cyan);
+    border-radius: 0 12px 12px 0;
+    padding: 1.8rem;
+    margin: 2rem 0;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.info-box.warning {
+    background: rgba(245, 158, 11, 0.05);
+    border-left-color: var(--accent-orange);
+    border-color: rgba(245, 158, 11, 0.2);
+}
+
+.info-box.success {
+    background: rgba(16, 185, 129, 0.05);
+    border-left-color: var(--accent-green);
+    border-color: rgba(16, 185, 129, 0.2);
+}
+
+.info-box strong {
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 0.6rem;
+    font-size: 1rem;
+}
+
+.info-box p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+/* ========================================
+   ANALOGÍAS Y EJEMPLOS
+   ======================================== */
+/* ========================================
+   ANALOGÍAS Y EJEMPLOS
+   ======================================== */
+/* ========================================
+   ANALOGÍAS Y EJEMPLOS
+   ======================================== */
+.analogy-box {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(0, 212, 255, 0.05));
+    border: 2px solid var(--accent-purple);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2.5rem 0;
+    position: relative;
+    box-shadow: var(--glow-purple);
+}
+
+.analogy-box h5 {
+    color: var(--accent-purple);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    margin-top: 0;
+    font-weight: 700;
+}
+
+.analogy-box p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.8;
+}
+
+/* ========================================
+   DIAGRAMAS DE RED
+   ======================================== */
+.network-diagram {
+    background: var(--bg-secondary);
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2.5rem 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    overflow-x: auto;
+    color: var(--accent-cyan);
+}
+
+.network-diagram pre {
+    margin: 0;
+    white-space: pre;
+}
+
+/* ========================================
+   TABLAS
+   ======================================== */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.95rem;
+    overflow-x: auto;
+    display: block;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.data-table thead th {
+    background: var(--bg-tertiary);
+    color: var(--accent-cyan);
+    padding: 1.2rem;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--accent-cyan);
+}
+
+.data-table thead th:first-child {
+    border-radius: 12px 0 0 0;
+}
+
+.data-table thead th:last-child {
+    border-radius: 0 12px 0 0;
+}
+
+.data-table tbody td {
+    padding: 1.2rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.data-table tbody tr {
+    background: var(--bg-card);
+    transition: var(--transition);
+}
+
+.data-table tbody tr:nth-child(even) {
+    background: var(--bg-secondary);
+}
+
+.data-table tbody tr:hover {
+    background: rgba(0, 212, 255, 0.05);
+    transform: scale(1.01);
+}
+
+/* ========================================
+   COMPARACIÓN DE CARACTERÍSTICAS
+   ======================================== */
+.compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.8rem;
+    margin: 2.5rem 0;
+}
+
+.compare-card {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 2.2rem;
+    border: 2px solid var(--border-color);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.compare-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+    transform: scaleX(0);
+    transition: var(--transition);
+}
+
+.compare-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg), var(--glow-cyan);
+    border-color: var(--accent-cyan);
+}
+
+.compare-card:hover::before {
+    transform: scaleX(1);
+}
+
+.compare-icon {
+    font-size: 3rem;
+    margin-bottom: 1.2rem;
+    filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+}
+
+.compare-card h5 {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.compare-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.7;
+}
+
+/* ========================================
+   CÓDIGO Y COMANDOS
+   ======================================== */
+.code-block {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.8rem;
+    margin: 2rem 0;
+    overflow-x: auto;
+    box-shadow: var(--shadow);
+}
+
+.code-block code {
+    color: var(--accent-green);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.site-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    text-align: center;
+    padding: 3rem 2rem;
+    margin-top: 5rem;
+}
+
+.site-footer strong {
+    color: var(--accent-cyan);
+}
+
+.site-footer p {
+    margin: 0.6rem 0;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+    .site-header {
+        padding: 2.5rem 0;
+    }
+    
+    .header-content,
+    .nav-container,
+    .main-container {
+        padding: 0 1.5rem;
+    }
+    
+    .module-header,
+    .section {
+        padding: 2rem;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+    
+    .data-table {
+        font-size: 0.85rem;
+    }
+    
+    .data-table thead th,
+    .data-table tbody td {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .compare-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .site-header h1 {
+        font-size: 2rem;
+    }
+}
